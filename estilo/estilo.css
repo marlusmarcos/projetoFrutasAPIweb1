@@ -1,0 +1,9 @@
+.topo {
+    display: flex;
+    background-color: rgb(29, 113, 134);
+    height: 80px;
+    width: auto;
+    justify-content: center;
+    align-items: center;
+    
+}
