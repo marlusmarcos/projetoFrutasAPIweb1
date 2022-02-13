@@ -26,7 +26,7 @@ function carregarSelect (response) {
     let dados = JSON.parse(response);
     var tam = dados.data.length;
     for(i = 0; i < tam; i++) {
-        console.log (dados.data[i].name); 
+        //console.log (dados.data[i].name); 
         option = new Option(dados.data[i].name, dados.data[i].id);
         frutas.options[frutas.options.length] = option;
         option.innerHTML = dados.data[i].name; 
@@ -35,29 +35,55 @@ function carregarSelect (response) {
 xhttpAssincrono(carregarSelect,1,null);
 
 function gerarInformacao(response) {
-    let cards = document.getElementById("cardid");
+    var cards = document.getElementById("cardid");
     let dados = JSON.parse(response);
-    let pathimg = dados.data[0].imageUrl;
-    var img = document.createElement('img');
-    img.src=pathimg; 
-    img.class="card-img-top";
-    
-    console.log(pathimg);
 
-    let cardBody = document.createElement('div');
-    cardBody.className = 'card-body';
+    for(i = 0; i < dados.data.length; i++) {
+        var cardMain = document.createElement('div');
+        cardMain.className="card";
+        cardMain.style="width: 18rem;";
+        
+        let pathimg = dados.data[i].imageUrl;
+        var img = document.createElement('img');
+        img.src=pathimg; 
+        img.className="card-img-top";
     
-    let title = document.createElement('h5');
-    title.className = 'card-title';    
-    title.innerHTML = dados.data[0].name;
+        let cardBody = document.createElement('div');
+        cardBody.className = 'card-body';
+        cardBody.style ="margin-left: 0px;";
+        cardBody.style ="margin-right: 0px;";
+        cardBody.style = "width = 100%;";
 
-    let infor = document.createElement('p');
-    infor.class="card-text"
-    infor.innerHTML = dados.data[0].films[0];
-    
-    cards.appendChild(img);
-    cardBody.appendChild(title);
-    cardBody.appendChild(infor);
-    cards.appendChild(cardBody);
+        let title = document.createElement('h5');
+        title.className = 'card-title';    
+        title.innerHTML = dados.data[i].name;
+
+        let infor = document.createElement('p');
+        infor.class="card-text"
+        if (dados.data[i].films[0] != null ) {
+            infor.innerHTML = dados.data[i].films[0];
+        } else {
+            infor.innerHTML = "sem filmes";
+        }
+
+        let bntMostrar = document.createElement('button');
+        bntMostrar.type="button";
+        bntMostrar.className = "btn btn-primary";
+        bntMostrar.innerText = "mostrar informações";
+        bntMostrar.onclick=exibirUnico();
+        cardMain.appendChild(img);
+        cardBody.appendChild(title);
+        cardBody.appendChild(infor);
+        cardMain.appendChild(cardBody);
+        cardMain.appendChild(bntMostrar)
+        cards.appendChild(cardMain);
+    }
 }
+
 xhttpAssincrono(gerarInformacao,1,null);
+
+
+function exibirUnico() {
+    console.log("exibindo unico");
+}
+

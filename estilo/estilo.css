@@ -1,9 +1,16 @@
 .topo {
     display: flex;
     background-color: rgb(29, 113, 134);
-    height: 80px;
+    height: auto;
     width: auto;
     justify-content: center;
     align-items: center;
     
+}
+.card{
+    margin: auto;
+    
+}
+.form-select  {
+    margin: auto;
 }
