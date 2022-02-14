@@ -14,7 +14,7 @@ function xhttpAssincrono(callBackFunction, type, value) {
         url += ""
     break;
     case 2:
-    url += value;
+    url += "/"+value;
     break;
     }
     xhttp.open("GET", url, true);
@@ -22,17 +22,22 @@ function xhttpAssincrono(callBackFunction, type, value) {
 }
 
 function carregarSelect (response) {
-    frutas = document.getElementById("frutasid");
+    frutas = document.getElementById("personagemid");
     let dados = JSON.parse(response);
     var tam = dados.data.length;
     for(i = 0; i < tam; i++) {
-        //console.log (dados.data[i].name); 
-        option = new Option(dados.data[i].name, dados.data[i].id);
+        //console.log (dados.data[i]._id); 
+        option = new Option(dados.data[i].name, dados.data[i]._id);
         frutas.options[frutas.options.length] = option;
         option.innerHTML = dados.data[i].name; 
    }
 }
 xhttpAssincrono(carregarSelect,1,null);
+
+function pegarUnico (response) {
+    let dados = JSON.parse(response);
+}
+
 
 function gerarInformacao(response) {
     var cards = document.getElementById("cardid");
@@ -65,17 +70,18 @@ function gerarInformacao(response) {
         } else {
             infor.innerHTML = "sem filmes";
         }
-
+/*
         let bntMostrar = document.createElement('button');
         bntMostrar.type="button";
         bntMostrar.className = "btn btn-primary";
         bntMostrar.innerText = "mostrar informações";
         bntMostrar.onclick=exibirUnico();
+*/
         cardMain.appendChild(img);
         cardBody.appendChild(title);
         cardBody.appendChild(infor);
         cardMain.appendChild(cardBody);
-        cardMain.appendChild(bntMostrar)
+        //cardMain.appendChild(bntMostrar)
         cards.appendChild(cardMain);
     }
 }
@@ -85,5 +91,33 @@ xhttpAssincrono(gerarInformacao,1,null);
 
 function exibirUnico() {
     console.log("exibindo unico");
+}
+
+function pegarPersonagemSelecionado () {
+    let id = document.getElementById("personagemid").value;
+    var infp = document.getElementById("conteudo");
+    infp.innerHTML="";
+    xhttpAssincrono (buscarPersonagem, 2,  id);
+      
+}
+function buscarPersonagem (response) {
+    var infp = document.getElementById("conteudo");
+    let dados = JSON.parse(response);
+
+    let pathimg = dados.imageUrl;
+    var img = document.createElement('img');
+    img.src=pathimg;
+    infp.appendChild(img);
+
+    //var filmes = document.createElement("li");
+    for (i = 0; i < dados.films.length; i++) {
+        var filmes = document.createElement("li");
+        filmes.innerHTML += (dados.films[i]);
+        infp.appendChild (filmes);
+        
+    }
+    
+
+
 }
 
