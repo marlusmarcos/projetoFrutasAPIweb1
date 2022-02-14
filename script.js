@@ -1,4 +1,3 @@
-
 function xhttpAssincrono(callBackFunction, type, value) {
     var xhttp = new XMLHttpRequest();;
     xhttp.onreadystatechange = function () {
@@ -31,7 +30,9 @@ function carregarSelect (response) {
         frutas.options[frutas.options.length] = option;
         option.innerHTML = dados.data[i].name; 
    }
+   
 }
+
 xhttpAssincrono(carregarSelect,1,null);
 
 function pegarUnico (response) {
@@ -108,7 +109,7 @@ function buscarPersonagem (response) {
     var img = document.createElement('img');
     img.src=pathimg;
     infp.appendChild(img);
-
+    contarFavorito(dados._id, dados.name);
     //var filmes = document.createElement("li");
     for (i = 0; i < dados.films.length; i++) {
         var filmes = document.createElement("li");
@@ -117,7 +118,5 @@ function buscarPersonagem (response) {
         
     }
     
-
-
 }
 
